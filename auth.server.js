@@ -9,6 +9,27 @@ var secret = 'this is the secret secret secret 12356';
 
 var app = express();
 
+// Add headers
+app.use(function (req, res, next) {
+
+    // Website you wish to allow to connect
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:9000');
+
+    // Request methods you wish to allow
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+
+    // Request headers you wish to allow
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type, Accept, Authorization');
+
+
+    // Set to true if you need the website to include cookies in the requests sent
+    // to the API (e.g. in case you use sessions)
+    res.setHeader('Access-Control-Allow-Credentials', true);
+
+    // Pass to next layer of middleware
+    next();
+});
+
 // We are going to protect /api routes with JWT
 app.use('/api', expressJwt({secret: secret}));
 
@@ -24,15 +45,15 @@ app.use(function(err, req, res, next){
 app.post('/authenticate', function (req, res) {
   //TODO validate req.body.username and req.body.password
   //if is invalid, return 401
-  if (!(req.body.username === 'john.doe' && req.body.password === 'foobar')) {
+  if (!(req.body.username === 'essi' && req.body.password === 'essi')) {
     res.status(401).send('Wrong user or password');
     return;
   }
 
   var profile = {
-    first_name: 'John',
-    last_name: 'Doe',
-    email: 'john@doe.com',
+    first_name: 'abhi',
+    last_name: 'n',
+    email: 'abhi@gmail.com',
     id: 123
   };
 
